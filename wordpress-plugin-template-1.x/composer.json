@@ -1,0 +1,67 @@
+{
+    "name": "sebkay/wordpress-plugin-template",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Seb Kay",
+            "email": "seb@sebkay.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "WPT\\": "src/"
+        },
+        "classmap": [
+            "classes/dependencies"
+        ]
+    },
+    "require": {
+        "php": "^8.2",
+        "illuminate/collections": "^10.43",
+        "saloonphp/saloon": "^3.0",
+        "monolog/monolog": "^3.4",
+        "coenjacobs/mozart": "^0.7.1",
+        "deliciousbrains/wp-background-processing": "^1.2",
+        "sebkay/wp-cronable": "^1.0"
+    },
+    "require-dev": {
+        "spatie/ray": "^1.39",
+        "php-stubs/wordpress-stubs": "^6.3",
+        "laravel/pint": "^1.13"
+    },
+    "scripts": {
+        "build:dev": [
+            "composer install"
+        ],
+        "build:prod": [
+            "composer install --no-dev --optimize-autoloader"
+        ],
+        "lint": [
+            "./vendor/bin/pint --test -v"
+        ],
+        "fix": [
+            "./vendor/bin/pint"
+        ],
+        "post-install-cmd": [
+            "\"vendor/bin/mozart\" compose",
+            "composer dump-autoload"
+        ],
+        "post-update-cmd": [
+            "\"vendor/bin/mozart\" compose",
+            "composer dump-autoload"
+        ]
+    },
+    "extra": {
+        "mozart": {
+            "dep_namespace": "Dependencies\\",
+            "dep_directory": "/src/Dependencies/",
+            "classmap_directory": "/classes/dependencies/",
+            "classmap_prefix": "WPT_",
+            "packages": [
+                "deliciousbrains/wp-background-processing"
+            ],
+            "delete_vendor_directories": true
+        }
+    }
+}
